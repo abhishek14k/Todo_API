@@ -1,8 +1,8 @@
 const expect = require('expect');
-const supertest = require('supertest');
+const request = require('supertest');
 
 const {app} = require('./../server');
-const {todo} = require('./../models/todo');
+const {Todo} = require('./../models/todo');
 
 beforeEach((done) => {
   Todo.remove({}).then(() => done());
@@ -20,7 +20,7 @@ describe('POST /todos', () => {
         expect(res.body.text).toBe(text);
       })
       .end((err, res) => {
-        if(err){
+        if (err) {
           return done(err);
         }
 
@@ -38,9 +38,10 @@ describe('POST /todos', () => {
       .send({})
       .expect(400)
       .end((err, res) => {
-        if(err){
+        if (err) {
           return done(err);
         }
+
         Todo.find().then((todos) => {
           expect(todos.length).toBe(0);
           done();
@@ -48,6 +49,3 @@ describe('POST /todos', () => {
       });
   });
 });
-
-
-    /* "test": "echo \"Error: no test specified\" && exit 1", */
